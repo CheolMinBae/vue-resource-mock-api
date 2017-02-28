@@ -5,7 +5,7 @@
 [![npm](https://img.shields.io/npm/v/vue-resource-mock.svg)](https://www.npmjs.com/package/vue-resource-mock)
 [![vue2](https://img.shields.io/badge/vue-2.x-brightgreen.svg)](https://vuejs.org/)
 
-A Vue.js Plugin
+A mock middleware for vue-resource
 
 
 ## :book: Documentation
