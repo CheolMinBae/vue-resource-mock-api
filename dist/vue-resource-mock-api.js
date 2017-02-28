@@ -1,5 +1,5 @@
 /*!
- * vue-resource-mock-api v0.0.7 
+ * vue-resource-mock-api v0.0.8 
  * (c) 2017 Jerez Bain
  * Released under the MIT License.
  */
@@ -90,7 +90,7 @@ function plugin (request, next) {
     }
 }
 
-plugin.version = '0.0.7';
+plugin.version = '0.0.8';
 
 /*export default plugin
 

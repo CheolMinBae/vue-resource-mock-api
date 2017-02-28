@@ -1,13 +1,13 @@
 {
   "name": "vue-resource-mock-api",
   "description": "A mock middleware for vue-resource",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "author": {
     "name": "Jerez Bain",
     "email": "jerezb31@gmail.com"
   },
   "bugs": {
-    "url": "https://github.com/giovanniorigins/vue-resource-mock/issues"
+    "url": "https://github.com/giovanniorigins/vue-resource-mock-api/issues"
   },
   "devDependencies": {
     "babel-core": "^6.22.1",
@@ -73,7 +73,7 @@
     "dist/vue-resource-mock-api.common.js",
     "src"
   ],
-  "homepage": "https://github.com/giovanniorigins/vue-resource-mock#readme",
+  "homepage": "https://github.com/giovanniorigins/vue-resource-mock-api#readme",
   "jsnext:main": "src/index.js",
   "keywords": [
     "plugin",
@@ -92,7 +92,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/giovanniorigins/vue-resource-mock.git"
+    "url": "git+https://github.com/giovanniorigins/vue-resource-mock-api.git"
   },
   "scripts": {
     "build": "node config/build.js",
