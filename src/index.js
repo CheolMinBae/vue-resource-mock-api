@@ -54,7 +54,7 @@ function plugin (request, next) {
                 return result
             }, [])
     };
-    let Routes = mapRoutes(this.$mockAPI);
+    let Routes = mapRoutes(this.mockAPI);
 
     let [path, query] = request.url.split('?');
     let route = Routes.filter((item) => {
@@ -92,7 +92,7 @@ export default {
         if (!Vue.http) {
             throw new Error('[vue-resource] is not found. Make sure it is imported and "Vue.use" it before vue-resource-mock')
         }
-        Vue.prototype.$mockAPI = data;
+        Vue.prototype.mockAPI = data;
         Vue.http.interceptors.push(plugin)
     }
 }
