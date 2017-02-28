@@ -1,9 +1,9 @@
 /* @flow */
-function plugin (Vue, routes) {
-    import UrlPattern from 'url-pattern';
-    import qs from 'qs';
+import UrlPattern from 'url-pattern';
+import qs from 'qs';
 
-    const TAG = '[vue-resource-mock]';
+function plugin (Vue, routes) {
+    const TAG = '[vue-resource-mock] ';
     const MATCH_OPTIONS = {
         segmentValueCharset: 'a-zA-Z0-9.:-_%'
     };
