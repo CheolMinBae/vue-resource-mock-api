@@ -97,7 +97,7 @@
   "scripts": {
     "build": "node config/build.js",
     "changelog": "conventional-changelog -i CHANGELOG.md -s -p angular",
-    "release": "conventional-github-releaser -p angular -t 860e9a671a402d4b03e14256948150a07c6ce5ed",
+    "release": "conventional-github-releaser -p angular",
     "clean": "rm -rf coverage && rm -rf dist/*.js* && rm ./*.log",
     "dev": "BABEL_ENV=test webpack-dev-server --inline --hot --open --config config/webpack.dev.conf.js",
     "docs": "gitbook serve ./gitbook ./docs",
