@@ -2,7 +2,7 @@
 import UrlPattern from 'url-pattern';
 import qs from 'qs';
 
-function plugin (Vue, routes) {
+function plugin (request, next) {
     const TAG = '[vue-resource-mock] ';
     const MATCH_OPTIONS = {
         segmentValueCharset: 'a-zA-Z0-9.:-_%'
@@ -54,40 +54,45 @@ function plugin (Vue, routes) {
                 return result
             }, [])
     };
-    const MockMiddleware = (routes) => {
-        let Routes = mapRoutes(routes);
+    let Routes = mapRoutes(this.$mockAPI);
 
-        return (request, next) => {
-            let [path, query] = request.url.split('?');
-            let route = Routes.filter((item) => {
-                item.matchResult = item.pattern.match(path);
-                return request.method.toLowerCase() === item.method.toLowerCase() && !!item.matchResult
-            });
-            if (route.length === 0) {
-                console.warn(TAG + 'Request pass through: ' + request.url);
-                next();
-            } else {
-                console.info(TAG + 'Request served with mock: ' + request.url);
-                let mockResponse = route[0].handler(route[0].matchResult, qs.parse(query), request);
-                if (mockResponse.delay) {
-                    setTimeout(() => next(request.respondWith(mockResponse.body, mockResponse)), mockResponse.delay)
-                } else {
-                    next(request.respondWith(mockResponse.body, mockResponse))
-                }
-            }
+    let [path, query] = request.url.split('?');
+    let route = Routes.filter((item) => {
+        item.matchResult = item.pattern.match(path);
+        return request.method.toLowerCase() === item.method.toLowerCase() && !!item.matchResult
+    });
+    if (route.length === 0) {
+        console.warn(TAG + 'Request pass through: ' + request.url);
+        next();
+    } else {
+        console.info(TAG + 'Request served with mock: ' + request.url);
+        let mockResponse = route[0].handler(route[0].matchResult, qs.parse(query), request);
+        if (mockResponse.delay) {
+            setTimeout(() => next(request.respondWith(mockResponse.body, mockResponse)), mockResponse.delay)
+        } else {
+            next(request.respondWith(mockResponse.body, mockResponse))
         }
-    }
-    return MockMiddleware;
+    };
 }
 
 plugin.version = '__VERSION__';
 
-export default plugin
+/*export default plugin
 
 if (typeof window !== 'undefined' && window.Vue) {
-  window.Vue.use(plugin);
+  // window.Vue.use(plugin);
     if (!Vue.http) {
         throw new Error('[vue-resource] is not found. Make sure it is imported and "Vue.use" it before vue-resource-mock')
     }
     Vue.http.interceptors.push(plugin(data))
+}*/
+
+export default {
+    install(Vue, data) {
+        if (!Vue.http) {
+            throw new Error('[vue-resource] is not found. Make sure it is imported and "Vue.use" it before vue-resource-mock')
+        }
+        Vue.prototype.$mockAPI = data;
+        Vue.http.interceptors.push(plugin)
+    }
 }
