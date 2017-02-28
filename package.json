@@ -86,7 +86,7 @@
     "component"
   ],
   "license": "MIT",
-  "main": "dist/vue-resource-mock.common.js",
+  "main": "dist/vue-resource-mock-api.common.js",
   "engines": {
     "node": ">= 6.0"
   },
