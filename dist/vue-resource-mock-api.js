@@ -1,5 +1,5 @@
 /*!
- * vue-resource-mock-api v0.0.6 
+ * vue-resource-mock-api v0.0.7 
  * (c) 2017 Jerez Bain
  * Released under the MIT License.
  */
@@ -67,7 +67,7 @@ function plugin (request, next) {
                 return result
             }, [])
     };
-    var Routes = mapRoutes(this.mockAPI);
+    var Routes = mapRoutes(this.$mockAPI);
 
     var ref = request.url.split('?');
     var path = ref[0];
@@ -90,7 +90,7 @@ function plugin (request, next) {
     }
 }
 
-plugin.version = '0.0.6';
+plugin.version = '0.0.7';
 
 /*export default plugin
 
@@ -107,7 +107,7 @@ var index = {
         if (!Vue.http) {
             throw new Error('[vue-resource] is not found. Make sure it is imported and "Vue.use" it before vue-resource-mock')
         }
-        Vue.prototype.mockAPI = data;
+        Vue.prototype.$mockAPI = data;
         Vue.http.interceptors.push(plugin);
     }
 };
