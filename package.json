@@ -1,5 +1,5 @@
 {
-  "name": "vue-resource-mock",
+  "name": "vue-resource-mock-api",
   "description": "A mock middleware for vue-resource",
   "version": "0.0.4",
   "author": {
