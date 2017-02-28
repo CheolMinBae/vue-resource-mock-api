@@ -3,6 +3,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/giovanniorigins/vue-resource-mock/badge.svg?branch=dev)](https://coveralls.io/github/giovanniorigins/vue-resource-mock?branch=dev)
 
 [![npm](https://img.shields.io/npm/v/vue-resource-mock.svg)](https://www.npmjs.com/package/vue-resource-mock)
+[![vue2](https://img.shields.io/badge/vue-resource-0.9.x-brightgreen.svg)](https://vuejs.org/)
 [![vue2](https://img.shields.io/badge/vue-2.x-brightgreen.svg)](https://vuejs.org/)
 
 A mock middleware for vue-resource

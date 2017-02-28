@@ -60,6 +60,13 @@
     "webpack": "^2.2.0",
     "webpack-dev-server": "^2.2.1"
   },
+  "dependencies": {
+    "qs": "^6.3.0",
+    "url-pattern": "^1.0.3"
+  },
+  "peerDependencies": {
+    "vue-resource": "^0.9.x || ^1.x"
+  },
   "files": [
     "dist/vue-resource-mock.js",
     "dist/vue-resource-mock.min.js",
