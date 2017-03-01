@@ -1,5 +1,5 @@
 /*!
- * vue-resource-mock-api v0.0.8 
+ * vue-resource-mock-api v0.0.9 
  * (c) 2017 Jerez Bain
  * Released under the MIT License.
  */
@@ -13,9 +13,7 @@ var qs = _interopDefault(require('qs'));
 /*  */
 function plugin (request, next) {
     var TAG = '[vue-resource-mock] ';
-    var MATCH_OPTIONS = {
-        segmentValueCharset: 'a-zA-Z0-9.:-_%'
-    };
+    var MATCH_OPTIONS = this.mockMATCH_OPTIONS;
     var mapRoutes = function (map) {
         return Object.keys(map)
             .reduce(function (result, route) {
@@ -65,7 +63,7 @@ function plugin (request, next) {
                 return result
             }, [])
     };
-    var Routes = mapRoutes(this.$mockAPI);
+    var Routes = mapRoutes(this.mockAPI);
 
     var ref = request.url.split('?');
     var path = ref[0];
@@ -88,6 +86,15 @@ function plugin (request, next) {
     }
 }
 
+function extend(obj1, obj2) {
+    var keys = Object.keys(obj2);
+    for (var i = 0; i < keys.length; i += 1) {
+        var val = obj2[keys[i]];
+        obj1[keys[i]] = ['string', 'number', 'array', 'boolean'].indexOf(typeof val) === -1 ? extend(obj1[keys[i]] || {}, val) : val;
+    }
+    return obj1;
+}
+
 plugin.version = '__VERSION__';
 
 /*export default plugin
@@ -105,7 +112,13 @@ var index = {
         if (!Vue.http) {
             throw new Error('[vue-resource] is not found. Make sure it is imported and "Vue.use" it before vue-resource-mock')
         }
-        Vue.prototype.$mockAPI = data;
+        Vue.prototype.mockAPI = data.hasOwnProperty('routes') ? data.routes : data;
+        var matchOptions = { segmentValueCharset: 'a-zA-Z0-9.:-_%' };
+        if (data.hasOwnProperty('matchOptions')) {
+            extend(matchOptions, data.matchOptions);
+        }
+        Vue.prototype.mockMATCH_OPTIONS = matchOptions;
+        // Lets begin
         Vue.http.interceptors.push(plugin);
     }
 };
