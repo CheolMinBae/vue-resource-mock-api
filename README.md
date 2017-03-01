@@ -30,13 +30,24 @@ import VueResourceMock from 'vue-resource-mock-api'
 import MockData from './mock-api'
 Vue.use(VueResourceMock, MockData);
 ```
+You can also change the <a href="https://github.com/snd/url-pattern#customize-the-pattern-syntax">url-pattern syntax</a> by passing a nested object with the `matchOptions` property
+
+```
+Vue.use(VueResourceMock, {
+  routes: MockData,
+  matchOptions: {
+    segmentValueCharset: 'a-zA-Z0-9.:-_%' // default
+  }
+});
+```
+
 
 ```
 // ./mock-api.js
 export default {
 
     // Get api token
-    ['POST */login'] (pathMatch, query, request) {
+    ['POST *login'] (pathMatch, query, request) {
         // before respond, you can check the path and query parameters with `pathMatch` & `query`
         // powered by 'url-pattern' & 'qs'
         // https://www.npmjs.com/package/url-pattern
@@ -54,7 +65,7 @@ export default {
     },
     
     // Get list of cars
-    ['POST */cars/'] (pathMatch, query, request) {
+    ['POST *cars/:car'] (pathMatch, query, request) {
         let body = {
             data: [
             	{

@@ -1,13 +1,13 @@
 {
   "name": "vue-resource-mock-api",
   "description": "A mock middleware for vue-resource",
-  "version": "0.0.6",
+  "version": "0.0.9",
   "author": {
     "name": "Jerez Bain",
     "email": "jerezb31@gmail.com"
   },
   "bugs": {
-    "url": "https://github.com/giovanniorigins/vue-resource-mock/issues"
+    "url": "https://github.com/giovanniorigins/vue-resource-mock-api/issues"
   },
   "devDependencies": {
     "babel-core": "^6.22.1",
@@ -68,12 +68,12 @@
     "vue-resource": "^0.9.x || ^1.x"
   },
   "files": [
-    "dist/vue-resource-mock.js",
-    "dist/vue-resource-mock.min.js",
-    "dist/vue-resource-mock.common.js",
+    "dist/vue-resource-mock-api.js",
+    "dist/vue-resource-mock-api.min.js",
+    "dist/vue-resource-mock-api.common.js",
     "src"
   ],
-  "homepage": "https://github.com/giovanniorigins/vue-resource-mock#readme",
+  "homepage": "https://github.com/giovanniorigins/vue-resource-mock-api#readme",
   "jsnext:main": "src/index.js",
   "keywords": [
     "plugin",
@@ -86,13 +86,13 @@
     "component"
   ],
   "license": "MIT",
-  "main": "dist/vue-resource-mock.common.js",
+  "main": "dist/vue-resource-mock-api.common.js",
   "engines": {
     "node": ">= 6.0"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/giovanniorigins/vue-resource-mock.git"
+    "url": "git+https://github.com/giovanniorigins/vue-resource-mock-api.git"
   },
   "scripts": {
     "build": "node config/build.js",
