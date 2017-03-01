@@ -4,9 +4,7 @@ import qs from 'qs';
 
 function plugin (request, next) {
     const TAG = '[vue-resource-mock] ';
-    const MATCH_OPTIONS = {
-        segmentValueCharset: 'a-zA-Z0-9.:-_%'
-    };
+    const MATCH_OPTIONS = this.mockMATCH_OPTIONS;
     const mapRoutes = (map) => {
         return Object.keys(map)
             .reduce((result, route) => {
@@ -54,7 +52,7 @@ function plugin (request, next) {
                 return result
             }, [])
     };
-    let Routes = mapRoutes(this.$mockAPI);
+    let Routes = mapRoutes(this.mockAPI);
 
     let [path, query] = request.url.split('?');
     let route = Routes.filter((item) => {
@@ -72,7 +70,16 @@ function plugin (request, next) {
         } else {
             next(request.respondWith(mockResponse.body, mockResponse))
         }
-    };
+    }
+}
+
+function extend(obj1, obj2) {
+    let keys = Object.keys(obj2);
+    for (let i = 0; i < keys.length; i += 1) {
+        let val = obj2[keys[i]];
+        obj1[keys[i]] = ['string', 'number', 'array', 'boolean'].indexOf(typeof val) === -1 ? extend(obj1[keys[i]] || {}, val) : val;
+    }
+    return obj1;
 }
 
 plugin.version = '__VERSION__';
@@ -92,7 +99,13 @@ export default {
         if (!Vue.http) {
             throw new Error('[vue-resource] is not found. Make sure it is imported and "Vue.use" it before vue-resource-mock')
         }
-        Vue.prototype.$mockAPI = data;
+        Vue.prototype.mockAPI = data.hasOwnProperty('routes') ? data.routes : data;
+        let matchOptions = { segmentValueCharset: 'a-zA-Z0-9.:-_%' };
+        if (data.hasOwnProperty('matchOptions')) {
+            extend(matchOptions, data.matchOptions)
+        }
+        Vue.prototype.mockMATCH_OPTIONS = matchOptions;
+        // Lets begin
         Vue.http.interceptors.push(plugin)
     }
 }
