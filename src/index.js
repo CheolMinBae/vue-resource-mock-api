@@ -55,6 +55,18 @@ function plugin (request, next) {
     let Routes = mapRoutes(this.mockAPI);
 
     let [path, query] = request.url.split('?');
+    // Vue Resource `$resource` uses {/[a-zA-Z]} format to match properties
+    // We are only looking for the firs to character because of the likelyhood of this being a resource
+    if (request.url.indexOf('{/') !== -1) {
+        // Transforms $resource urls with matching params
+        for (let property in request.params) {
+            if (request.params.hasOwnProperty(property) && typeof request.params[property] === 'string') {
+                let regex = new RegExp('({\/' + property + '})');
+                path = path.replace(regex, '/' + request.params[property]);
+            }
+        }
+    }
+
     let route = Routes.filter((item) => {
         item.matchResult = item.pattern.match(path);
         return request.method.toLowerCase() === item.method.toLowerCase() && !!item.matchResult

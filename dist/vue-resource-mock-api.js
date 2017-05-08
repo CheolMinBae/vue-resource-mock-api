@@ -1,5 +1,5 @@
 /*!
- * vue-resource-mock-api v0.0.9 
+ * vue-resource-mock-api v0.1.0 
  * (c) 2017 Jerez Bain
  * Released under the MIT License.
  */
@@ -70,6 +70,18 @@ function plugin (request, next) {
     var ref = request.url.split('?');
     var path = ref[0];
     var query = ref[1];
+    // Vue Resource `$resource` uses {/[a-zA-Z]} format to match properties
+    // We are only looking for the firs to character because of the likelyhood of this being a resource
+    if (request.url.indexOf('{/') !== -1) {
+        // Transforms $resource urls with matching params
+        for (var property in request.params) {
+            if (request.params.hasOwnProperty(property) && typeof request.params[property] === 'string') {
+                var regex = new RegExp('({\/' + property + '})');
+                path = path.replace(regex, '/' + request.params[property]);
+            }
+        }
+    }
+
     var route = Routes.filter(function (item) {
         item.matchResult = item.pattern.match(path);
         return request.method.toLowerCase() === item.method.toLowerCase() && !!item.matchResult
@@ -97,7 +109,7 @@ function extend(obj1, obj2) {
     return obj1;
 }
 
-plugin.version = '0.0.9';
+plugin.version = '0.1.0';
 
 /*export default plugin
 
