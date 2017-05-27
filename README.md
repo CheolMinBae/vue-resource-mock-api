@@ -36,7 +36,7 @@ You can also change the <a href="https://github.com/snd/url-pattern#customize-th
 Vue.use(VueResourceMock, {
   routes: MockData,
   matchOptions: {
-    segmentValueCharset: 'a-zA-Z0-9.:-_%' // default
+    segmentValueCharset: 'a-zA-Z0-9.-_%' // default
   }
 });
 ```
