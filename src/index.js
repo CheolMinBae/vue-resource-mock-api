@@ -57,14 +57,19 @@ function plugin (request, next) {
     let [path, query] = request.url.split('?');
     // Vue Resource `$resource` uses {/[a-zA-Z]} format to match properties
     // We are only looking for the firs to character because of the likelyhood of this being a resource
+    let resourceRegex;
     if (request.url.indexOf('{/') !== -1) {
         // Transforms $resource urls with matching params
         for (let property in request.params) {
             if (request.params.hasOwnProperty(property) && typeof request.params[property] === 'string') {
-                let regex = new RegExp('({\/' + property + '})');
-                path = path.replace(regex, '/' + request.params[property]);
+                resourceRegex = new RegExp('({\/' + property + '})');
+                path = path.replace(resourceRegex, '/' + request.params[property]);
             }
         }
+        // clear up any remaining/missing params on path
+        resourceRegex = new RegExp('({\/[' + MATCH_OPTIONS.segmentValueCharset + ']+})', 'g');
+        path = path.replace(resourceRegex, '');
+
     }
 
     let route = Routes.filter((item) => {
@@ -112,7 +117,7 @@ export default {
             throw new Error('[vue-resource] is not found. Make sure it is imported and "Vue.use" it before vue-resource-mock')
         }
         Vue.prototype.mockAPI = data.hasOwnProperty('routes') ? data.routes : data;
-        let matchOptions = { segmentValueCharset: 'a-zA-Z0-9.:-_%' };
+        let matchOptions = { segmentValueCharset: 'a-zA-Z0-9.-_%' };
         if (data.hasOwnProperty('matchOptions')) {
             extend(matchOptions, data.matchOptions)
         }

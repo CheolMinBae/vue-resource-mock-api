@@ -1,5 +1,5 @@
 /*!
- * vue-resource-mock-api v0.1.0 
+ * vue-resource-mock-api v0.1.1 
  * (c) 2017 Jerez Bain
  * Released under the MIT License.
  */
@@ -72,14 +72,19 @@ function plugin (request, next) {
     var query = ref[1];
     // Vue Resource `$resource` uses {/[a-zA-Z]} format to match properties
     // We are only looking for the firs to character because of the likelyhood of this being a resource
+    var resourceRegex;
     if (request.url.indexOf('{/') !== -1) {
         // Transforms $resource urls with matching params
         for (var property in request.params) {
             if (request.params.hasOwnProperty(property) && typeof request.params[property] === 'string') {
-                var regex = new RegExp('({\/' + property + '})');
-                path = path.replace(regex, '/' + request.params[property]);
+                resourceRegex = new RegExp('({\/' + property + '})');
+                path = path.replace(resourceRegex, '/' + request.params[property]);
             }
         }
+        // clear up any remaining/missing params on path
+        resourceRegex = new RegExp('({\/[' + MATCH_OPTIONS.segmentValueCharset + ']+})', 'g');
+        path = path.replace(resourceRegex, '');
+
     }
 
     var route = Routes.filter(function (item) {
@@ -109,7 +114,7 @@ function extend(obj1, obj2) {
     return obj1;
 }
 
-plugin.version = '0.1.0';
+plugin.version = '0.1.1';
 
 /*export default plugin
 
@@ -127,7 +132,7 @@ var index = {
             throw new Error('[vue-resource] is not found. Make sure it is imported and "Vue.use" it before vue-resource-mock')
         }
         Vue.prototype.mockAPI = data.hasOwnProperty('routes') ? data.routes : data;
-        var matchOptions = { segmentValueCharset: 'a-zA-Z0-9.:-_%' };
+        var matchOptions = { segmentValueCharset: 'a-zA-Z0-9.-_%' };
         if (data.hasOwnProperty('matchOptions')) {
             extend(matchOptions, data.matchOptions);
         }

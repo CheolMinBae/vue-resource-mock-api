@@ -1,7 +1,7 @@
 {
   "name": "vue-resource-mock-api",
   "description": "A mock middleware for vue-resource",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": {
     "name": "Jerez Bain",
     "email": "jerezb31@gmail.com"
